@@ -135,25 +135,33 @@ udev 룰(99-mini-dev.rules)로 아래 노드 권한을 0666으로 설정:
 ## 🏗️ Architecture
 ```mermaid
 flowchart LR
-  subgraph Kernel[Kernel Drivers]
-    DHT[dht11_ledbar\n/dev/dht11\n+ LED bar auto update]
-    RTC[ds1302_rpi_rtc\n/dev/rtc0]
-    ROT[rotary_device_driver\n/dev/rotary\n(R/K events)]
-    OLED[ssd1306_i2c\n/dev/ssd1306]
+  subgraph KERNEL["Kernel Drivers"]
+    DHT["dht11_ledbar<br/>/dev/dht11<br/>LED bar: humidity gauge"]
+    RTC["ds1302_rpi_rtc<br/>/dev/rtc0"]
+    ROT["rotary_device_driver<br/>/dev/rotary<br/>R / K events"]
+    OLED["ssd1306_i2c<br/>/dev/ssd1306"]
   end
 
-  subgraph User[User Space]
-    DAEMON[env-oled\n- draw clock/sensor pages\n- read /dev/dht11\n- read/write /dev/rtc0\n- read /dev/rotary\n- write framebuffer to /dev/ssd1306]
+  subgraph USER["User Space"]
+    DAEMON["env-oled daemon<br/>- draw pages (clock/sensor)<br/>- read /dev/dht11<br/>- read/write /dev/rtc0<br/>- read /dev/rotary<br/>- write framebuffer to /dev/ssd1306"]
   end
 
-  subgraph OS[OS Integration]
-    UDEV[99-mini-dev.rules]
-    SVC1[mini-kmods.service\n(insmod *.ko)]
-    SVC2[env-oled.service\n(start daemon)]
+  subgraph OS["OS Integration"]
+    UDEV["99-mini-dev.rules<br/>/dev permissions"]
+    SVC1["mini-kmods.service<br/>insmod kernel modules"]
+    SVC2["env-oled.service<br/>start daemon"]
   end
 
-  SVC1 --> Kernel
-  UDEV --> Kernel
+  SVC1 --> DHT
+  SVC1 --> RTC
+  SVC1 --> ROT
+  SVC1 --> OLED
+
+  UDEV --> DHT
+  UDEV --> RTC
+  UDEV --> ROT
+  UDEV --> OLED
+
   SVC2 --> DAEMON
 
   DAEMON --> DHT
