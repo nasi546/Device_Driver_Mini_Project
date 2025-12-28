@@ -158,7 +158,8 @@ flowchart LR
   DAEMON <--> DEV
 ```
 <details> <summary><b>Runtime Flow (click to expand)</b></summary> <br/>
-mermaid```
+ 
+```mermaid
 flowchart TB
   ROT["/dev/rotary<br/>R / K events"] --> DAEMON["env-oled daemon<br/>page + time edit"]
   DHT["/dev/dht11<br/>temp/humi read"] --> DAEMON
@@ -166,8 +167,7 @@ flowchart TB
   DAEMON --> OLED["/dev/ssd1306<br/>framebuffer write"]
 
   DHT --> LED["LED Bar<br/>humidity gauge<br/>(updated in driver)"]
-```
-
+</details>```
 ## ⚙️ Build & Install
 1) Build kernel modules
 
