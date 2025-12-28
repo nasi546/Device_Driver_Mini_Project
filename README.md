@@ -157,7 +157,10 @@ flowchart LR
   SVC2 --> DAEMON
   DAEMON <--> DEV
 ```
-<details> <summary><b>Runtime Flow (click to expand)</b></summary> <br/>
+<details>
+<summary><b>Runtime Flow (click to expand)</b></summary>
+
+<br/>
  
 ```mermaid
 flowchart TB
