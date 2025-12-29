@@ -93,60 +93,51 @@ env-oled 데몬이 RTC_RD_TIME / RTC_SET_TIME로 읽기/설정
 
 ## 🔌 Wiring (Fixed Pinout)
 
-BCM 기준 / 괄호는 Physical Pin
+**Note:** 핀 번호는 **BCM(GPIO 번호)** 기준이며, 괄호 안은 **Physical Pin(물리적 위치)** 입니다.
 
-OLED (I2C)
+### 1. OLED (SSD1306 / I2C)
+| Pin Name | BCM (GPIO) | Physical Pin | Note |
+| :---: | :---: | :---: | :--- |
+| **SDA** | GPIO 2 | Pin 3 | I2C Data |
+| **SCL** | GPIO 3 | Pin 5 | I2C Clock |
+| **VCC** | - | Pin 1 or 17 | 3.3V |
+| **GND** | - | Any GND | |
 
-SDA: GPIO2 (Pin 3)
+### 2. DHT11 (Temp/Humi Sensor)
+| Pin Name | BCM (GPIO) | Physical Pin | Note |
+| :---: | :---: | :---: | :--- |
+| **DATA** | GPIO 4 | Pin 7 | 1-Wire |
+| **VCC** | - | - | 3.3V |
+| **GND** | - | - | |
 
-SCL: GPIO3 (Pin 5)
+### 3. DS1302 (RTC)
+| Pin Name | BCM (GPIO) | Physical Pin | Note |
+| :---: | :---: | :---: | :--- |
+| **CLK** | GPIO 5 | Pin 29 | |
+| **DAT** | GPIO 6 | Pin 31 | |
+| **RST/CE** | GPIO 13 | Pin 33 | Chip Enable |
+| **VCC** | - | - | 3.3V |
+| **GND** | - | - | |
 
-VCC: 3.3V (Pin 1/17)
+### 4. Rotary Encoder
+| Pin Name | BCM (GPIO) | Physical Pin | Note |
+| :---: | :---: | :---: | :--- |
+| **S1** | GPIO 17 | Pin 11 | Phase A |
+| **S2** | GPIO 27 | Pin 13 | Phase B |
+| **KEY** | GPIO 22 | Pin 15 | Push Button |
+| **GND** | - | - | Common |
 
-GND: GND
-
-DHT11
-
-DATA: GPIO4 (Pin 7)
-
-VCC: 3.3V
-
-GND: GND
-
-DS1302 (3-wire)
-
-CLK: GPIO5 (Pin 29)
-
-DAT: GPIO6 (Pin 31)
-
-RST/CE: GPIO13 (Pin 33)
-
-VCC: 3.3V
-
-GND: GND
-
-Rotary Encoder
-
-S1: GPIO17 (Pin 11)
-
-S2: GPIO27 (Pin 13)
-
-KEY: GPIO22 (Pin 15)
-
-GND: GND
-
-### LED Bar (8ch)
+### 5. LED Bar (8-Channel)
 | Channel | BCM (GPIO) | Physical Pin |
 | :---: | :---: | :---: |
-| 1 | GPIO23 | Pin 16 |
-| 2 | GPIO24 | Pin 18 |
-| 3 | GPIO25 | Pin 22 |
-| 4 | GPIO12 | Pin 32 |
-| 5 | GPIO16 | Pin 36 |
-| 6 | GPIO20 | Pin 38 |
-| 7 | GPIO21 | Pin 40 |
-| 8 | GPIO26 | Pin 37 |
-
+| **1** | GPIO 23 | Pin 16 |
+| **2** | GPIO 24 | Pin 18 |
+| **3** | GPIO 25 | Pin 22 |
+| **4** | GPIO 12 | Pin 32 |
+| **5** | GPIO 16 | Pin 36 |
+| **6** | GPIO 20 | Pin 38 |
+| **7** | GPIO 21 | Pin 40 |
+| **8** | GPIO 26 | Pin 37 |
 ## 🧩 Device Nodes & Permissions
 
 udev 룰(99-mini-dev.rules)로 아래 노드 권한을 0666으로 설정:
