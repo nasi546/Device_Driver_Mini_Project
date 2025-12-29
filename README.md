@@ -135,16 +135,18 @@ KEY: GPIO22 (Pin 15)
 
 GND: GND
 
-LED Bar (8ch)
-Channel	BCM(GPIO)	Physical Pin
-1	GPIO23	Pin 16
-2	GPIO24	Pin 18
-3	GPIO25	Pin 22
-4	GPIO12	Pin 32
-5	GPIO16	Pin 36
-6	GPIO20	Pin 38
-7	GPIO21	Pin 40
-8	GPIO26	Pin 37
+### LED Bar (8ch)
+| Channel | BCM (GPIO) | Physical Pin |
+| :---: | :---: | :---: |
+| 1 | GPIO23 | Pin 16 |
+| 2 | GPIO24 | Pin 18 |
+| 3 | GPIO25 | Pin 22 |
+| 4 | GPIO12 | Pin 32 |
+| 5 | GPIO16 | Pin 36 |
+| 6 | GPIO20 | Pin 38 |
+| 7 | GPIO21 | Pin 40 |
+| 8 | GPIO26 | Pin 37 |
+
 ## 🧩 Device Nodes & Permissions
 
 udev 룰(99-mini-dev.rules)로 아래 노드 권한을 0666으로 설정:
