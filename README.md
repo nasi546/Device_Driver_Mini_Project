@@ -232,3 +232,45 @@ DHT11 값 깨짐: 배선 짧게, 풀업 저항 고려, 샘플링 간격 유지(�
 서비스 안 뜸: journalctl -u mini-kmods.service -u env-oled.service로 원인 확인
 
 .ko 로드 실패: mini-kmods.service의 .ko 경로 수정 + dmesg 확인
+```mermaid
+stateDiagram-v2
+    [*] --> CLOCK
+
+    state "Clock Page" as CLOCK
+    state "Sensor Page" as SENSOR
+
+    state "Edit: YEAR" as EY
+    state "Edit: MON"  as EMO
+    state "Edit: DAY"  as ED
+    state "Edit: HOUR" as EH
+    state "Edit: MIN"  as EMIN
+    state "Edit: SEC"  as ES
+    state "SAVE (RTC_SET_TIME)" as SAVE
+
+    %% ---------- Normal view ----------
+    CLOCK --> SENSOR: R (rotate)
+    SENSOR --> CLOCK: R (rotate)
+    SENSOR --> CLOCK: K (press)
+
+    %% ---------- Enter edit ----------
+    CLOCK --> EY: K (press)
+
+    %% ---------- Edit field change ----------
+    EY --> EY: R cw/ccw (year +/-)
+    EMO --> EMO: R cw/ccw (mon +/-)
+    ED --> ED: R cw/ccw (day +/-)
+    EH --> EH: R cw/ccw (hour +/-)
+    EMIN --> EMIN: R cw/ccw (min +/-)
+    ES --> ES: R cw/ccw (sec +/-)
+
+    %% ---------- Next field ----------
+    EY --> EMO: K (next)
+    EMO --> ED: K (next)
+    ED --> EH: K (next)
+    EH --> EMIN: K (next)
+    EMIN --> ES: K (next)
+
+    %% ---------- Save & exit ----------
+    ES --> SAVE: K (finish)
+    SAVE --> CLOCK: K (commit & exit)
+```
