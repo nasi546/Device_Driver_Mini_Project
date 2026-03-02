@@ -70,7 +70,7 @@ static void ds1302_tx_u8(u8 v)
 	}
 }
 
-// LSB first RX  ✅ FIXED: 8 clocks, sample on CLK=1
+// LSB first RX   FIXED: 8 clocks, sample on CLK=1
 static u8 ds1302_rx_u8(void)
 {
 	int i;
@@ -144,7 +144,7 @@ static void ds1302_ensure_osc_running(struct ds1302_priv *p)
 	mutex_unlock(&p->lock);
 }
 
-// ✅ 안전하게 drvdata 찾기(널이면 ENODEV로 반환)
+//  안전하게 drvdata 찾기(널이면 ENODEV로 반환)
 static inline struct ds1302_priv *ds_priv_from_dev(struct device *dev)
 {
 	struct ds1302_priv *p = NULL;
@@ -256,7 +256,7 @@ static int ds1302_rtc_set_time(struct device *dev, struct rtc_time *tm)
 
 	ds1302_write_protect(false);
 
-	// ✅ 안전하게: 멈춘 상태(CH=1)로 초 먼저 써서 스톱 -> 나머지 -> 마지막에 CH=0로 재시작
+	//  안전하게: 멈춘 상태(CH=1)로 초 먼저 써서 스톱 -> 나머지 -> 마지막에 CH=0로 재시작
 	ds1302_write_reg_raw(DS1302_REG_SECONDS, sec_halt);
 
 	ds1302_write_reg_raw(DS1302_REG_MINUTES, min);
@@ -327,10 +327,10 @@ static int ds1302_probe(struct platform_device *pdev)
 	mutex_init(&p->lock);
 	platform_set_drvdata(pdev, p);
 
-	// ✅ fallback 세팅(혹시 drvdata 못 찾는 케이스 방어)
+	// fallback 세팅(혹시 drvdata 못 찾는 케이스 방어)
 	g_priv = p;
 
-	// ✅ 모듈 로드 시 오실레이터(Clock Halt) 풀어주기
+	// 모듈 로드 시 오실레이터(Clock Halt) 풀어주기
 	ds1302_ensure_osc_running(p);
 
 	p->rtc = devm_rtc_device_register(&pdev->dev, DRV_NAME, &ds1302_rtc_ops, THIS_MODULE);
@@ -341,7 +341,7 @@ static int ds1302_probe(struct platform_device *pdev)
 		return ret;
 	}
 
-	// ✅ rtc device에서도 drvdata를 바로 찾을 수 있게 세팅
+	//  rtc device에서도 drvdata를 바로 찾을 수 있게 세팅
 	dev_set_drvdata(&p->rtc->dev, p);
 
 	dev_info(&pdev->dev, "loaded (CLK=%d IO=%d CE=%d) -> /dev/rtcX\n",
